@@ -35,6 +35,7 @@ Creates a new user account and generates a class A key.
 Registers a new device with the user account.
 
 *Returns*
+
     {
       success: true,
       kA: <user's current kA>,
@@ -46,6 +47,7 @@ Registers a new device with the user account.
 Fetches the user's current key.
 
 *Returns*
+
     {
       success: true,
       kA: <user's current kA>,
@@ -58,6 +60,7 @@ All devices besides the device that initiated the call will be marked as having
 an outdated key.
 
 *Returns*
+
     {
       success: true,
       kA: <newly generated kA>,
