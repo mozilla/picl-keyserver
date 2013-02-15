@@ -1,0 +1,29 @@
+{
+  "name": "picl-keyserver",
+  "version": "0.0.0",
+  "description": "keyserver bits for Profile-In-the-CLoud",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha -R spec --recursive --timeout 10000 --ignore-leaks",
+    "start": "NODE_ENV=local node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mozilla/picl-keyserver.git"
+  },
+  "license": "MPL 2.0",
+  "dependencies": {
+    "hapi": "git://github.com/zaach/hapi.git#develop",
+    "awsbox": "0.4.1",
+    "convict": "git://github.com/zaach/node-convict.git#disorderly",
+    "picl-server": "git://github.com/mozilla/picl-server.git",
+    "async": "0.1.22",
+    "node-uuid": "1.4.0"
+  },
+  "optionalDependencies": {
+    "couchbase": "0.0.11"
+  },
+  "devDependencies": {
+    "mocha": "1.8.1"
+  }
+}
