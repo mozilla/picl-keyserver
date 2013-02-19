@@ -8,7 +8,6 @@ var makeRequest = helpers.makeRequest.bind(server);
 var TEST_AUDIENCE = config.get('public_url');
 var TEST_EMAIL;
 var TEST_ASSERTION;
-var TEST_TOKEN = 'foobar';
 
 /*describe('get user', function() {*/
   //it('can get user email and assertion', function(done) {
@@ -29,7 +28,7 @@ describe('user', function() {
   var kA, version, deviceId;
 
   it('should create a new account', function(done) {
-    makeRequest('PUT', '/user/create', {
+    makeRequest('POST', '/user', {
       //payload: { assertion: TEST_ASSERTION }
       payload: { email: TEST_EMAIL }
     }, function(res) {
@@ -45,7 +44,7 @@ describe('user', function() {
   });
 
   it('should add a new device', function(done) {
-    makeRequest('PUT', '/device/create', {
+    makeRequest('POST', '/device', {
       //payload: { assertion: TEST_ASSERTION }
       payload: { email: TEST_EMAIL }
     }, function(res) {
@@ -61,10 +60,8 @@ describe('user', function() {
   });
 
   it('should get user info', function(done) {
-    makeRequest('PUT', '/user/get/' + deviceId, {
-      //payload: { assertion: TEST_ASSERTION }
-      payload: { email: TEST_EMAIL }
-    }, function(res) {
+    makeRequest('GET', '/user/' + deviceId + '?email=' + TEST_EMAIL
+    , function(res) {
       assert.equal(res.statusCode, 200);
       assert.equal(kA, res.result.kA);
       assert.equal(res.result.version, 1);
@@ -74,7 +71,7 @@ describe('user', function() {
   });
 
   it('should bump version', function(done) {
-    makeRequest('PUT', '/user/bump/' + deviceId, {
+    makeRequest('POST', '/user/bump/' + deviceId, {
       //payload: { assertion: TEST_ASSERTION }
       payload: { email: TEST_EMAIL }
     }, function(res) {

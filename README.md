@@ -19,7 +19,7 @@ Eventuall, they might take an assertion:
       assertion: <persona generated assertion>
     }
 
-### PUT /user/create
+### POST /user/create
 Creates a new user account and generates a class A key.
 
 *Returns*:
@@ -31,7 +31,7 @@ Creates a new user account and generates a class A key.
       deviceId: <32 random bytes in hex>
     }
 
-### PUT /device/create
+### POST /device/create
 Registers a new device with the user account.
 
 *Returns*
@@ -43,7 +43,7 @@ Registers a new device with the user account.
       deviceId: <newly generated deviceId>
     }
 
-### PUT /user/get/{deviceId}
+### GET /user/get/{deviceId}
 Fetches the user's current key.
 
 *Returns*
@@ -54,7 +54,7 @@ Fetches the user's current key.
       version: <kA version>
     }
 
-### PUT /user/bump/{deviceId}
+### POST /user/bump/{deviceId}
 This creates a new class A key for the user and bumps the version number.
 All devices besides the device that initiated the call will be marked as having
 an outdated key.
