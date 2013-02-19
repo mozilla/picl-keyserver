@@ -19,7 +19,7 @@ Eventuall, they might take an assertion:
       assertion: <persona generated assertion>
     }
 
-### POST /user/create
+### POST /user
 Creates a new user account and generates a class A key.
 
 *Returns*:
@@ -31,7 +31,7 @@ Creates a new user account and generates a class A key.
       deviceId: <32 random bytes in hex>
     }
 
-### POST /device/create
+### POST /device
 Registers a new device with the user account.
 
 *Returns*
@@ -43,7 +43,7 @@ Registers a new device with the user account.
       deviceId: <newly generated deviceId>
     }
 
-### GET /user/get/{deviceId}
+### GET /user/{deviceId}
 Fetches the user's current key.
 
 *Returns*
