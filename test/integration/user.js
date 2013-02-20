@@ -6,7 +6,7 @@ var server = helpers.server;
 var makeRequest = helpers.makeRequest.bind(server);
 
 var TEST_AUDIENCE = config.get('public_url');
-var TEST_EMAIL;
+var TEST_EMAIL = 'foo@example.com';
 var TEST_ASSERTION;
 
 /*describe('get user', function() {*/
@@ -70,6 +70,17 @@ describe('user', function() {
     });
   });
 
+  it('should get user info without supplying a device ID', function(done) {
+    makeRequest('GET', '/user/?email=' + TEST_EMAIL
+    , function(res) {
+      assert.equal(res.statusCode, 200);
+      assert.equal(kA, res.result.kA);
+      assert.equal(res.result.version, 1);
+
+      done();
+    });
+  });
+
   it('should bump version', function(done) {
     makeRequest('POST', '/user/bump/' + deviceId, {
       //payload: { assertion: TEST_ASSERTION }
@@ -82,5 +93,6 @@ describe('user', function() {
       done();
     });
   });
+
 });
 

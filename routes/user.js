@@ -22,7 +22,7 @@ exports.routes = [
       validate: {
         schema: {
           assertion: Str(),
-          email: Str()
+          email: Str().required()
         }
       },
       response: {
@@ -37,7 +37,7 @@ exports.routes = [
   },
   {
     method: 'GET',
-    path: '/user/{deviceId}',
+    path: '/user/{deviceId?}',
     handler: get,
     config: {
       description: 'get user meta data',
@@ -45,7 +45,7 @@ exports.routes = [
       validate: {
         query: {
           assertion: Str(),
-          email: Str()
+          email: Str().required()
         }
       },
       response: {
@@ -99,6 +99,15 @@ function create(request) {
 // get a user's class A key and its version number
 function get(request) {
   var pre = request.pre;
+
+  // For NULL auth, deviceId is not required
+  if (! request.params.deviceId) {
+    return request.reply({
+      success: true,
+      kA: pre.user.kA,
+      version: pre.user.kA_version
+    });
+  }
 
   // update the device's last kA request time
   users.updateDevice(pre.userId, request.params.deviceId, function(err) {
