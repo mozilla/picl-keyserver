@@ -13,11 +13,16 @@ All API calls take a JSON payload of an email address. E.g.:
       email: bob@example.com
     }
 
+or, for GET requests: `?email=bob@example.com`.
+
 Eventuall, they might take an assertion:
 
     {
       assertion: <persona generated assertion>
     }
+
+### NULL security model
+Clients can safely ignore `version` and `deviceId` in API responses. These are intended for key revocation, but they won't be used in early prototypes.
 
 ### POST /user
 Creates a new user account and generates a class A key.
@@ -43,8 +48,8 @@ Registers a new device with the user account.
       deviceId: <newly generated deviceId>
     }
 
-### GET /user/{deviceId}
-Fetches the user's current key.
+### GET /user/[deviceId]
+Fetches the user's current key. `deviceId` is not required.
 
 *Returns*
 
@@ -55,6 +60,8 @@ Fetches the user's current key.
     }
 
 ### POST /user/bump/{deviceId}
+**Not used in NULL authentication model**
+
 This creates a new class A key for the user and bumps the version number.
 All devices besides the device that initiated the call will be marked as having
 an outdated key.
