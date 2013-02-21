@@ -21,7 +21,6 @@ exports.routes = [
       pre: [ prereqs.email ],
       validate: {
         schema: {
-          assertion: Str(),
           email: Str().required()
         }
       },
@@ -44,7 +43,6 @@ exports.routes = [
       pre: [ prereqs.emailGet, prereqs.userId, prereqs.user ],
       validate: {
         query: {
-          assertion: Str(),
           email: Str().required()
         }
       },
@@ -66,8 +64,7 @@ exports.routes = [
       pre: [ prereqs.email, prereqs.userId ],
       validate: {
         schema: {
-          assertion: Str(),
-          email: Str()
+          email: Str().required()
         }
       },
       response: {
