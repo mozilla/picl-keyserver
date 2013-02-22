@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const Hapi = require('Hapi');
+const Hapi = require('hapi');
 
 const users = require('../lib/users.js');
 const prereqs = require('../lib/prereqs.js');
@@ -26,7 +26,6 @@ exports.routes = [
       },
       response: {
         schema: {
-          success: Bool().required(),
           kA: Str().required(),
           deviceId: Str().required(),
           version: Num().integer().required()
@@ -44,7 +43,6 @@ function create(request) {
     if (err) return request.reply(err);
 
     request.reply.payload({
-      success: true,
       kA: user.kA,
       deviceId: deviceId,
       version: user.kA_version
