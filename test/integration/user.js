@@ -94,5 +94,14 @@ describe('user', function() {
     });
   });
 
+  it('should 404 on unkown user', function(done) {
+    makeRequest('GET', '/user/?email=unknown@example.com'
+    , function(res) {
+      assert.equal(res.statusCode, 404);
+
+      done();
+    });
+  });
+
 });
 

@@ -41,7 +41,11 @@ function create(request) {
   var user = request.pre.user;
 
   users.addDevice(request.pre.userId, function(err, deviceId) {
-    if (err) return request.reply(Hapi.Error.badRequest(err));
+    if (err && err.match(/^Unkown/)) {
+      return request.reply(Hapi.Error.notFound(err));
+    } else if (err) {
+      return request.reply(Hapi.Error.badRequest(err));
+    }
 
     request.reply({
       success: true,

@@ -79,10 +79,11 @@ exports.routes = [
 ];
 
 
+
 // create a user by assertion
 function create(request) {
   users.create(request.pre.email, function(err, result) {
-    if (err) return request.reply(Hapi.Error.badRequest(err));
+    if (err) return request.reply(err);
 
     request.reply({
       success: true,
@@ -108,7 +109,7 @@ function get(request) {
 
   // update the device's last kA request time
   users.updateDevice(pre.userId, request.params.deviceId, function(err) {
-    if (err) return request.reply(Hapi.Error.badRequest(err));
+    if (err) return request.reply(err);
 
     request.reply({
       success: true,
@@ -124,11 +125,11 @@ function bump(request) {
 
   // mark all other devices as having a stale key
   users.outdateDevices(pre.userId, request.params.deviceId, function(err) {
-    if (err) return request.reply(Hapi.Error.badRequest(err));
+    if (err) return request.reply(err);
 
     // create a new key and bump the version
     users.bumpkA(pre.userId, function(err, user) {
-      if (err) return request.reply(Hapi.Error.badRequest(err));
+      if (err) return request.reply(err);
 
       request.reply({
         success: true,
@@ -138,3 +139,4 @@ function bump(request) {
     });
   });
 }
+
