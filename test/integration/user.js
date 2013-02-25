@@ -32,7 +32,7 @@ describe('user', function() {
       //payload: { assertion: TEST_ASSERTION }
       payload: { email: TEST_EMAIL }
     }, function(res) {
-      assert.equal(res.statusCode, 200);
+      assert.equal(res.statusCode, 201);
       assert.ok(res.result.kA);
       assert.ok(res.result.deviceId);
       assert.equal(res.result.version, 1);
@@ -48,7 +48,7 @@ describe('user', function() {
       //payload: { assertion: TEST_ASSERTION }
       payload: { email: TEST_EMAIL }
     }, function(res) {
-      assert.equal(res.statusCode, 200);
+      assert.equal(res.statusCode, 201);
       assert.equal(kA, res.result.kA);
       assert.ok(res.result.deviceId);
       assert.equal(res.result.version, 1);
