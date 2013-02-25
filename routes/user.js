@@ -93,12 +93,12 @@ function create(request) {
   users.create(request.pre.email, function(err, result) {
     if (err) return request.reply(err);
 
-    request.reply({
+    request.reply.payload({
       success: true,
       kA: result.kA,
       deviceId: result.deviceId,
       version: result.version
-    });
+    }).created().send();
   });
 }
 

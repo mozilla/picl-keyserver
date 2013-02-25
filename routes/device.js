@@ -43,11 +43,11 @@ function create(request) {
   users.addDevice(request.pre.userId, function(err, deviceId) {
     if (err) return request.reply(err);
 
-    request.reply({
+    request.reply.payload({
       success: true,
       kA: user.kA,
       deviceId: deviceId,
       version: user.kA_version
-    });
+    }).created().send();
   });
 }
