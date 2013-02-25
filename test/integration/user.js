@@ -71,7 +71,7 @@ describe('user', function() {
   });
 
   it('should get user info without supplying a device ID', function(done) {
-    makeRequest('GET', '/user/?email=' + TEST_EMAIL
+    makeRequest('GET', '/user?email=' + TEST_EMAIL
     , function(res) {
       assert.equal(res.statusCode, 200);
       assert.equal(kA, res.result.kA);
@@ -95,7 +95,7 @@ describe('user', function() {
   });
 
   it('should 404 on unkown user', function(done) {
-    makeRequest('GET', '/user/?email=unknown@example.com'
+    makeRequest('GET', '/user?email=unknown@example.com'
     , function(res) {
       assert.equal(res.statusCode, 404);
 
