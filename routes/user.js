@@ -11,6 +11,23 @@ const Str = Hapi.Types.String;
 const Bool = Hapi.Types.Boolean;
 const Num = Hapi.Types.Number;
 
+var getConfig = {
+  description: 'get user meta data',
+  pre: [ prereqs.emailGet, prereqs.userId, prereqs.user ],
+  validate: {
+    query: {
+      email: Str().required()
+    }
+  },
+  response: {
+    schema: {
+      success: Bool().required(),
+      kA: Str().required(),
+      version: Num().integer().required()
+    }
+  }
+};
+
 exports.routes = [
   {
     method: 'POST',
@@ -36,24 +53,15 @@ exports.routes = [
   },
   {
     method: 'GET',
+    path: '/user',
+    handler: get,
+    config: getConfig
+  },
+  {
+    method: 'GET',
     path: '/user/{deviceId?}',
     handler: get,
-    config: {
-      description: 'get user meta data',
-      pre: [ prereqs.emailGet, prereqs.userId, prereqs.user ],
-      validate: {
-        query: {
-          email: Str().required()
-        }
-      },
-      response: {
-        schema: {
-          success: Bool().required(),
-          kA: Str().required(),
-          version: Num().integer().required()
-        }
-      }
-    }
+    config: getConfig
   },
   {
     method: 'POST',
@@ -79,10 +87,11 @@ exports.routes = [
 ];
 
 
+
 // create a user by assertion
 function create(request) {
   users.create(request.pre.email, function(err, result) {
-    if (err) return request.reply(Hapi.Error.badRequest(err));
+    if (err) return request.reply(err);
 
     request.reply({
       success: true,
@@ -108,7 +117,7 @@ function get(request) {
 
   // update the device's last kA request time
   users.updateDevice(pre.userId, request.params.deviceId, function(err) {
-    if (err) return request.reply(Hapi.Error.badRequest(err));
+    if (err) return request.reply(err);
 
     request.reply({
       success: true,
@@ -124,11 +133,11 @@ function bump(request) {
 
   // mark all other devices as having a stale key
   users.outdateDevices(pre.userId, request.params.deviceId, function(err) {
-    if (err) return request.reply(Hapi.Error.badRequest(err));
+    if (err) return request.reply(err);
 
     // create a new key and bump the version
     users.bumpkA(pre.userId, function(err, user) {
-      if (err) return request.reply(Hapi.Error.badRequest(err));
+      if (err) return request.reply(err);
 
       request.reply({
         success: true,
@@ -138,3 +147,4 @@ function bump(request) {
     });
   });
 }
+
