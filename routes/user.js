@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const Hapi = require('Hapi');
+const Hapi = require('hapi');
 
 const users = require('../lib/users.js');
 const prereqs = require('../lib/prereqs.js');
@@ -12,7 +12,7 @@ const Bool = Hapi.Types.Boolean;
 const Num = Hapi.Types.Number;
 
 var getConfig = {
-  description: 'get user meta data',
+  description: 'Get user meta data',
   pre: [ prereqs.emailGet, prereqs.userId, prereqs.user ],
   validate: {
     query: {
@@ -21,7 +21,6 @@ var getConfig = {
   },
   response: {
     schema: {
-      success: Bool().required(),
       kA: Str().required(),
       version: Num().integer().required()
     }
@@ -34,7 +33,7 @@ exports.routes = [
     path: '/user',
     handler: create,
     config: {
-      description: 'create a new user',
+      description: 'Create a new user',
       pre: [ prereqs.email ],
       validate: {
         schema: {
@@ -43,7 +42,6 @@ exports.routes = [
       },
       response: {
         schema: {
-          success: Bool().required(),
           kA: Str().required(),
           deviceId: Str().required(),
           version: Num().integer().required()
@@ -77,7 +75,6 @@ exports.routes = [
       },
       response: {
         schema: {
-          success: Bool().required(),
           kA: Str().required(),
           version: Num().integer().required()
         }
@@ -94,7 +91,6 @@ function create(request) {
     if (err) return request.reply(err);
 
     request.reply.payload({
-      success: true,
       kA: result.kA,
       deviceId: result.deviceId,
       version: result.version
@@ -109,7 +105,6 @@ function get(request) {
   // For NULL auth, deviceId is not required
   if (! request.params.deviceId) {
     return request.reply({
-      success: true,
       kA: pre.user.kA,
       version: pre.user.kA_version
     });
@@ -120,7 +115,6 @@ function get(request) {
     if (err) return request.reply(err);
 
     request.reply({
-      success: true,
       kA: pre.user.kA,
       version: pre.user.kA_version
     });
@@ -140,7 +134,6 @@ function bump(request) {
       if (err) return request.reply(err);
 
       request.reply({
-        success: true,
         kA: user.kA,
         version: user.kA_version
       });
