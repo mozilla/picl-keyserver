@@ -48,7 +48,7 @@ Registers a new device with the user account.
       deviceId: <newly generated deviceId>
     }
 
-### GET /user/[deviceId]
+### GET /user[/deviceId]
 Fetches the user's current key. `deviceId` is not required.
 
 *Returns*
