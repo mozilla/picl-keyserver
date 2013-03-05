@@ -13,9 +13,9 @@
   },
   "license": "MPL 2.0",
   "dependencies": {
-    "hapi": "git://github.com/zaach/hapi.git#develop",
+    "hapi": "0.14.2",
     "awsbox": "0.4.1",
-    "convict": "git://github.com/zaach/node-convict.git#disorderly",
+    "convict": "0.1.x",
     "picl-server": "git://github.com/mozilla/picl-server.git",
     "async": "0.1.22",
     "node-uuid": "1.4.0"
