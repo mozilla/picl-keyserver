@@ -13,10 +13,11 @@ const Num = Hapi.Types.Number;
 
 var getConfig = {
   description: 'Get user meta data',
-  pre: [ prereqs.emailGet, prereqs.userId, prereqs.user ],
+  pre: [ prereqs.assertionGet, prereqs.userId, prereqs.user ],
   validate: {
     query: {
-      email: Str().required()
+      assertion: Str(),
+      email: Str()
     }
   },
   response: {
@@ -34,10 +35,11 @@ exports.routes = [
     handler: create,
     config: {
       description: 'Create a new user',
-      pre: [ prereqs.email ],
+      pre: [ prereqs.assertion ],
       validate: {
         schema: {
-          email: Str().required()
+          assertion: Str(),
+          email: Str()
         }
       },
       response: {
@@ -67,10 +69,11 @@ exports.routes = [
     handler: bump,
     config: {
       description: 'Create a new class A key for the user and bump the version number',
-      pre: [ prereqs.email, prereqs.userId ],
+      pre: [ prereqs.assertion, prereqs.userId ],
       validate: {
         schema: {
-          email: Str().required()
+          assertion: Str(),
+          email: Str()
         }
       },
       response: {
