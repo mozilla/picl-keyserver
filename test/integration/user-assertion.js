@@ -5,14 +5,40 @@ var helpers = require('../helpers');
 var server = helpers.server;
 var makeRequest = helpers.makeRequest.bind(server);
 
-var TEST_EMAIL = 'foo@example.com';
+var TEST_AUDIENCE = config.get('audience');
+var TEST_ASSERTION;
+var TEST_UNKNOWN_ASSERTION;
+
+describe('get user', function() {
+  it('can get user email and assertion', function(done) {
+    helpers.getUser(TEST_AUDIENCE, function(err, user) {
+
+      TEST_ASSERTION = user.assertion;
+
+      assert.ok(TEST_ASSERTION);
+
+      done();
+    });
+  });
+
+  it('can get another user email and assertion', function(done) {
+    helpers.getUser(TEST_AUDIENCE, function(err, user) {
+
+      TEST_UNKNOWN_ASSERTION = user.assertion;
+
+      assert.ok(TEST_UNKNOWN_ASSERTION);
+
+      done();
+    });
+  });
+});
 
 describe('user', function() {
   var kA, version, deviceId;
 
   it('should create a new account', function(done) {
     makeRequest('POST', '/user', {
-      payload: { email: TEST_EMAIL }
+      payload: { assertion: TEST_ASSERTION }
     }, function(res) {
       assert.equal(res.statusCode, 201);
       assert.ok(res.result.kA);
@@ -27,7 +53,7 @@ describe('user', function() {
 
   it('should add a new device', function(done) {
     makeRequest('POST', '/device', {
-      payload: { email: TEST_EMAIL }
+      payload: { assertion: TEST_ASSERTION }
     }, function(res) {
       assert.equal(res.statusCode, 201);
       assert.equal(kA, res.result.kA);
@@ -41,7 +67,7 @@ describe('user', function() {
   });
 
   it('should get user info', function(done) {
-    makeRequest('GET', '/user/' + deviceId + '?email=' + TEST_EMAIL
+    makeRequest('GET', '/user/' + deviceId + '?assertion=' + TEST_ASSERTION
     , function(res) {
       assert.equal(res.statusCode, 200);
       assert.equal(kA, res.result.kA);
@@ -52,7 +78,7 @@ describe('user', function() {
   });
 
   it('should get user info without supplying a device ID', function(done) {
-    makeRequest('GET', '/user?email=' + TEST_EMAIL
+    makeRequest('GET', '/user?assertion=' + TEST_ASSERTION
     , function(res) {
       assert.equal(res.statusCode, 200);
       assert.equal(kA, res.result.kA);
@@ -64,7 +90,7 @@ describe('user', function() {
 
   it('should bump version', function(done) {
     makeRequest('POST', '/user/bump/' + deviceId, {
-      payload: { email: TEST_EMAIL }
+      payload: { assertion: TEST_ASSERTION }
     }, function(res) {
       assert.equal(res.statusCode, 200);
       assert.notEqual(kA, res.result.kA);
@@ -75,7 +101,7 @@ describe('user', function() {
   });
 
   it('should 404 on unkown user', function(done) {
-    makeRequest('GET', '/user?email=unknown@example.com'
+    makeRequest('GET', '/user?assertion=' + TEST_UNKNOWN_ASSERTION
     , function(res) {
       assert.equal(res.statusCode, 404);
 

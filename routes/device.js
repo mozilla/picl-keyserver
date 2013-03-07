@@ -18,10 +18,11 @@ exports.routes = [
     handler: create,
     config: {
       description: 'create a new device for the user',
-      pre: [ prereqs.email, prereqs.userId, prereqs.user ],
+      pre: [ prereqs.assertion, prereqs.userId, prereqs.user ],
       validate: {
         schema: {
-          email: Str().required()
+          assertion: Str().without('email'),
+          email: Str().without('assertion')
         }
       },
       response: {
