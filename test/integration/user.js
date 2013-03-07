@@ -5,7 +5,7 @@ var helpers = require('../helpers');
 var server = helpers.server;
 var makeRequest = helpers.makeRequest.bind(server);
 
-var TEST_AUDIENCE = config.get('public_url');
+var TEST_AUDIENCE = config.get('audience');
 var TEST_EMAIL = 'foo@example.com';
 var TEST_ASSERTION;
 

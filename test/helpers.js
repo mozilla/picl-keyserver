@@ -25,7 +25,7 @@ exports.getUser = function(audience, cb) {
 
   var req = http.request({
     host: 'personatestuser.org',
-    path: '/email_with_assertion/' + encodeURIComponent(audience) + '/prod',
+    path: '/email_with_assertion/' + encodeURIComponent(audience) + '/custom?browserid='+ encodeURIComponent('picl.personatest.org') + '&verifier='+ encodeURIComponent('picl.personatest.org/verify'),
     method: 'GET'
   }, function (res) {
     var result = '';
