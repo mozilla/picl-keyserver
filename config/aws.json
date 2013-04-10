@@ -1,5 +1,8 @@
 {
   "kvstore": {
-    "backend": "couchbase"
+    "backend": "mysql"
+  },
+  "mysql": {
+    "database": "picl"
   }
 }

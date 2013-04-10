@@ -20,9 +20,6 @@
     "async": "0.1.22",
     "node-uuid": "1.4.0"
   },
-  "optionalDependencies": {
-    "couchbase": "0.0.11"
-  },
   "devDependencies": {
     "mocha": "1.8.1"
   }
